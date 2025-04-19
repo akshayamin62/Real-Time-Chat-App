@@ -25,7 +25,9 @@
                     </div>
                 {% else %}
                     <div class="message {% if msg.name == name %}message-own{% endif %}">
-                        <span class="sender" style="color: {{ '#FFFFFF' if msg.name == name else get_user_color(msg.name) }}">{{ msg.name }}</span>
+                        {% if msg.name != name %}
+                            <span class="sender" style="color: {{ get_user_color(msg.name) }}">{{ msg.name }}</span>
+                        {% endif %}
                         <p class="content">{{ msg.message }}</p>
                     </div>
                 {% endif %}
@@ -100,7 +102,6 @@
                     messageElement.classList.add('message-own');
                     // Own messages have white sender names
                     messageElement.innerHTML = `
-                        <span class="sender" style="color: #FFFFFF">${data.name}</span>
                         <p class="content">${data.message}</p>
                     `;
                 } else {
