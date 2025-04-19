@@ -14,7 +14,7 @@
         <div class="header">
             <h2><i class="fas fa-hashtag"></i> Room: <span id="room-code">{{ room }}</span></h2>
             <div class="user-info"><i class="fas fa-user"></i> {{ name }}</div>
-            <a href="/" class="leave-btn"><i class="fas fa-sign-out-alt"></i> Leave</a>
+            <a href="{{ url_for('home') }}" class="leave-btn"><i class="fas fa-sign-out-alt"></i> Leave</a>
         </div>
         
         <div class="messages" id="messages">
@@ -25,7 +25,7 @@
                     </div>
                 {% else %}
                     <div class="message {% if msg.name == name %}message-own{% endif %}">
-                        <span class="sender">{{ msg.name }}</span>
+                        <span class="sender" style="color: {{ '#FFFFFF' if msg.name == name else get_user_color(msg.name) }}">{{ msg.name }}</span>
                         <p class="content">{{ msg.message }}</p>
                     </div>
                 {% endif %}
@@ -123,13 +123,6 @@
             messageInput.focus();
             // Scroll to bottom of messages
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            
-            // Apply colors to existing messages on load
-            document.querySelectorAll('.message:not(.message-own):not(.message-system) .sender').forEach(sender => {
-                if (sender.parentElement.classList.contains('message-own')) return;
-                const name = sender.textContent;
-                sender.style.color = getUserColor(name);
-            });
         };
     </script>
 </body>
